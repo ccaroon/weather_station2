@@ -18,8 +18,11 @@ class AdafruitIO:
         feed_name = "%s.%s" % (self.__group_name, feed)
 
         limit = kwargs.get('limit', 1)
-        fields = kwargs.get('include', 'value')
-        url = F"{AdafruitIO.BASE_URL}/{self.__username}/feeds/{feed_name}/data?limit={limit};include={fields}"
+        fields = ['value']
+        fields.extend(kwargs.get('fields', []))
+        include = ','.join(fields)
+        url = F"{AdafruitIO.BASE_URL}/{self.__username}/feeds/{feed_name}/data?limit={limit}&include={include}"
+        # url = F"{AdafruitIO.BASE_URL}/{self.__username}/feeds/{feed_name}/data?limit={limit}"
 
         headers = {'X-AIO-Key': self.__key}
         # print(F"URL: [{url}] | HEADERS: [{headers}]")

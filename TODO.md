@@ -1,5 +1,6 @@
 # Weather Station 2 - TODO
-* [ ] Add Temp High
-* [ ] Add Temp Low
-* [ ] Added timestamp to TEMP and HUMD
-* [ ] Color code TEMP and HUMD
+* [x] Add Temp High
+* [x] Add Temp Low
+* [x] Added timestamp to TEMP and HUMD
+* [x] Color code TEMP and HUMD
+* [ ] Broader color range for TEMP
