@@ -1,2 +1,5 @@
 __pycache__
+.secrets
 lib/secrets.py
+*.pyc
+*.mpy

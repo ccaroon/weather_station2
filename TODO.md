@@ -4,3 +4,5 @@
 * [x] Added timestamp to TEMP and HUMD
 * [x] Color code TEMP and HUMD
 * [ ] Broader color range for TEMP
+* [ ] Move esp8266 code to here
+* [ ]

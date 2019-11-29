@@ -1,12 +1,12 @@
-import lib.secrets as secrets
+from lib.secrets import SECRETS
 import requests
 
 class AdafruitIO:
     BASE_URL = "https://io.adafruit.com/api/v2"
 
     def __init__(self, group):
-        self.__username = secrets.secrets['aio_username']
-        self.__key      = secrets.secrets['aio_key']
+        self.__username = SECRETS['aio_username']
+        self.__key      = SECRETS['aio_key']
 
         self.__group_name = group
 
@@ -17,7 +17,8 @@ class AdafruitIO:
         fields = ['value']
         fields.extend(kwargs.get('fields', []))
         include = ','.join(fields)
-        url = F"{AdafruitIO.BASE_URL}/{self.__username}/feeds/{feed_name}/data?limit={limit}&include={include}"
+        # url = F"{AdafruitIO.BASE_URL}/{self.__username}/feeds/{feed_name}/data?limit={limit}&include={include}"
+        url = "%s/%s/feeds/%s/data?limit=%d&include=%s" % (AdafruitIO.BASE_URL, self.__username, feed_name, limit, include)
         headers = {'X-AIO-Key': self.__key}
 
         resp = requests.get(url, headers=headers)
@@ -59,7 +60,7 @@ class AdafruitIO:
                 }
             }
         else:
-            resp = urequests.post(url, headers=headers, json=data)
+            resp = requests.post(url, headers=headers, json=data)
 
             if resp.status_code == 200:
                 output = {
