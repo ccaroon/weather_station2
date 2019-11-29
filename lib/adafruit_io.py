@@ -10,10 +10,6 @@ class AdafruitIO:
 
         self.__group_name = group
 
-    # curl -H "X-AIO-Key: f31c99b2c38f470c810ae386c2e5c4df" https://io.adafruit.com/api/v2/ccaroon/feeds/weather-station.temperature/data?limit=1
-
-    # https://io.adafruit.com/api/v2/ccaroon/feeds/weather-station.temperature/data?limit=1
-    # https://io.adafruit.com/api/v2/ccaroon/feeds/weather-station.temperature/data?limit=1;include=value
     def get_data(self, feed, **kwargs):
         feed_name = "%s.%s" % (self.__group_name, feed)
 
@@ -22,10 +18,8 @@ class AdafruitIO:
         fields.extend(kwargs.get('fields', []))
         include = ','.join(fields)
         url = F"{AdafruitIO.BASE_URL}/{self.__username}/feeds/{feed_name}/data?limit={limit}&include={include}"
-        # url = F"{AdafruitIO.BASE_URL}/{self.__username}/feeds/{feed_name}/data?limit={limit}"
-
         headers = {'X-AIO-Key': self.__key}
-        # print(F"URL: [{url}] | HEADERS: [{headers}]")
+
         resp = requests.get(url, headers=headers)
 
         if resp.status_code == 200:
