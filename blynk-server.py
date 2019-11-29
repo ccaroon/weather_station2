@@ -2,6 +2,7 @@
 import arrow
 import blynklib
 import random
+from lib.secrets import secrets
 
 from lib.adafruit_io import AdafruitIO
 
@@ -9,8 +10,7 @@ from lib.adafruit_io import AdafruitIO
 aio = AdafruitIO("weather-station")
 
 # Blynk
-BLYNK_AUTH = 'ePczqByz8YHSJJnYJDow8Dgb6K0TIAi-'
-blynk = blynklib.Blynk(BLYNK_AUTH)
+blynk = blynklib.Blynk(secrets['blynk_key'])
 
 ERR_COLOR = '#444444'
 
