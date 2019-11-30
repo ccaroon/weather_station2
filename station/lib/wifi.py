@@ -2,7 +2,7 @@ import network
 import urequests
 import utime
 
-import secrets
+from lib.secrets import SECRETS
 
 class MyWifi:
 
@@ -38,7 +38,7 @@ class MyWifi:
 
     @classmethod
     def autoconnect(cls):
-        cls.connect(secrets.secrets['ssid'], secrets.secrets['password'])
+        cls.connect(SECRETS['ssid'], SECRETS['password'])
 
     @classmethod
     def test(cls, url="http://api.open-notify.org/iss-now.json"):

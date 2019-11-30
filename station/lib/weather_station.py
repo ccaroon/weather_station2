@@ -1,8 +1,8 @@
 import ujson
 import os
 
-from adafruit_io import AdafruitIO
-from sensor import Sensor
+from lib.adafruit_io import AdafruitIO
+from lib.sensor import Sensor
 
 class WeatherStation:
 

@@ -1,5 +1,5 @@
-noop:
-	@echo "Weather Station 2"
+default:
+	@echo "Weather Station #2"
 
 all: lib/secrets.py
 
@@ -10,4 +10,4 @@ clean:
 	find . -name "*.pyc" -exec rm -rf {} +
 	find . -name "*.mpy" -exec rm -rf {} +
 
-.PHONY: noop clean
+.PHONY: default all clean

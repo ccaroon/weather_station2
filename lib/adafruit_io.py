@@ -1,5 +1,11 @@
+import sys
+
 from lib.secrets import SECRETS
-import requests
+
+if sys.platform == 'esp8266':
+    import urequests as requests
+else:
+    import requests
 
 class AdafruitIO:
     BASE_URL = "https://io.adafruit.com/api/v2"

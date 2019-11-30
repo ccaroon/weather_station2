@@ -1,9 +1,9 @@
 import time
 
-from adafruit_io import AdafruitIO
-from chronos import Chronos
-from indicator import Indicator
-from weather_station import WeatherStation
+from lib.adafruit_io import AdafruitIO
+from lib.chronos import Chronos
+from lib.indicator import Indicator
+from lib.weather_station import WeatherStation
 
 # ------------------------------------------------------------------------------
 station = WeatherStation('weather-station-dev', maintain_state=True, publish=True)

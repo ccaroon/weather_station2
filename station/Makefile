@@ -1,14 +1,17 @@
+default:
+	@echo "Weather Station #2"
+	@echo "Try:"
+	@echo "    - make install"
+
 include Ports.mk
 include FileMgmt.mk
-
-noop:
-	@echo "Weather Station"
 
 # NOTE: boot and main **must** be .py files ... not .mpy
 BOOT = boot.pyc
 APP  = main.pyc
-LIBS = ../lib/adafruit_io.mpy lib/chronos.mpy lib/indicator.mpy lib/wifi.mpy lib/file_utils.mpy lib/sensor.mpy lib/weather_station.mpy
+LIBS = ../lib/adafruit_io.mpy ../lib/secrets.mpy lib/chronos.mpy lib/indicator.mpy lib/wifi.mpy lib/file_utils.mpy lib/sensor.mpy lib/weather_station.mpy
 
+# Order matters - This include must come after above vars are set.
 include App.mk
 
 get-log:
@@ -38,16 +41,6 @@ get-state-dev:
 inspect: get-log get-state
 
 inspect-dev: get-log-dev get-state-dev
-
-lib/__init__.pyc: lib/__init__.py
-	touch $@
-	ampy --port $(PORT) mkdir lib
-	make upload-file FILE=lib/__init__.py
-
-../lib/secrets.py: lib/__init__.pyc ../.secrets
-	../bin/gen_secrets.py
-	mpy-cross ../lib/secrets.py
-	make upload-file FILE=../lib/secrets.mpy
 
 shell:
 	picocom $(PORT) -b115200
