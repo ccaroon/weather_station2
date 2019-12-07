@@ -10,3 +10,4 @@
 
 ## station
 * [x] Move esp8266 code to here
+* [ ] Remove WS code from `mikros` repo
