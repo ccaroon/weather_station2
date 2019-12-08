@@ -18,17 +18,24 @@ T_VPIN = 1
 H_VPIN = 3
 
 def temp_to_color(temp):
-    color = "#EEEEFF"
-    if temp <= 32:
-        color = "#EEEEFF"
-    elif temp > 32 and temp <= 67:
-        color = "#33fcff"
-    elif temp > 67 and temp <= 72:
-        color = "#74ff33"
-    elif temp > 72 and temp <= 85:
-        color = "#ffb533"
+    color = "#FFFFFF"
+
+    if temp <= 25:
+        color = "#ffffff"
+    elif temp > 25 and temp <= 32:
+        color = "#e4f0fb"
+    elif temp > 32 and temp <= 55:
+        color = "#047ffb"
+    elif temp > 55 and temp <= 64:
+        color = "#04fbe8"
+    elif temp > 64 and temp <=75:
+        color = "#33e108"
+    elif temp > 75 and temp <= 85:
+        color = "#f9f504"
+    elif temp > 85 and temp <= 90:
+        color = "#f97304"
     else:
-        color = "#ff3c33"
+        color = "#ff0000"
 
     return color
 
