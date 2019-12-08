@@ -21,20 +21,28 @@ def temp_to_color(temp):
     color = "#FFFFFF"
 
     if temp <= 25:
+        # white
         color = "#ffffff"
     elif temp > 25 and temp <= 32:
+        # bluish/white
         color = "#e4f0fb"
     elif temp > 32 and temp <= 55:
+        # blue
         color = "#047ffb"
     elif temp > 55 and temp <= 64:
+        # cyan
         color = "#04fbe8"
     elif temp > 64 and temp <=75:
+        # green
         color = "#33e108"
     elif temp > 75 and temp <= 85:
+        # yellow
         color = "#f9f504"
     elif temp > 85 and temp <= 90:
+        # orange
         color = "#f97304"
     else:
+        # red
         color = "#ff0000"
 
     return color
