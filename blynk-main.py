@@ -88,7 +88,7 @@ def read_handler(vpin):
             blynk.set_property(T_VPIN, 'color', temp_to_color(temperature['value']))
             blynk.set_property(H_VPIN, 'color', humd_to_color(humidity['value']))
 
-            print(F"OK ... T[{temperature['value']}] H[{humidity['value']}]")
+            print(F"WEATHER_STATION - OK ... T[{temperature['value']}] H[{humidity['value']}]")
 
             blynk.virtual_write(T_VPIN, temperature['value'])
             blynk.virtual_write(T_VPIN+1, temperature['created_at'].format("MM-DD-YYYY hh:mma"))
@@ -104,12 +104,12 @@ def read_handler(vpin):
             blynk.virtual_write(H_VPIN, humidity['value'])
             blynk.virtual_write(H_VPIN+1, humidity['created_at'].format("MM-DD-YYYY hh:mma"))
         else:
-            print(F"NOK ... T[{temperature['value']}] H[{humidity['value']}]")
+            print(F"WEATHER_STATION - NOK ... T[{temperature['value']}] H[{humidity['value']}]")
             # show widgets aka 'disabled' that mean we had errors during read sensor operation
             blynk.set_property(T_VPIN, 'color', ERR_COLOR)
             blynk.set_property(H_VPIN, 'color', ERR_COLOR)
     except Exception as e:
-        print(F"Error: {e}")
+        print(F"WEATHER_STATION - Error: {e}")
 
 
 while True:
