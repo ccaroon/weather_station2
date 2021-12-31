@@ -4,11 +4,10 @@ Description=Weather Station 2 - Blynk
 [Service]
 User=iota
 WorkingDirectory=/home/iota/weather_station2
-ExecStart=/home/iota/.pyenv/versions/weather_station/bin/python /home/iota/weather_station2/blynk-main.py
+ExecStart=/home/iota/.pyenv/versions/weather_station/bin/python /home/iota/weather_station2/clients/blynk/main.py
 Environment=PYTHONUNBUFFERED=1
 Environment=PYENV_VERSION=weather_station
 Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target
-

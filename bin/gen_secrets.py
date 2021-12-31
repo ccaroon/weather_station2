@@ -14,6 +14,6 @@ with open(dot_secrets, "r") as file:
     data = yaml.safe_load(file)
 
 secrets = data.get('secrets', {})
-with open("%s/lib/secrets.py" % (root_path), "w") as file:
+with open(F"{root_path}/lib/secrets.py", "w") as file:
     file.write("SECRETS = ")
     file.write(pformat(secrets))

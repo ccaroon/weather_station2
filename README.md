@@ -2,10 +2,9 @@
 
 ## Design
 
-## Components
-### Blynk Server
+## Clients
+### Blynk
 Runs on PC or Raspberry PI or similar.
 
-
-### Station
+### Server
 Runs on ESP8266

@@ -1,7 +1,16 @@
 default:
-	@echo "Weather Station #2"
-	@echo "Try:"
-	@echo "    - make install"
+	@echo "Weather Station #2 -- Server"
+	@echo "---------------------------"
+	@echo "-- Debugging Commands -- "
+	@echo "* get-log       - Retrieve and print Device Log File"
+	@echo "* get-state     - Retrieve and print Device State File"
+	@echo "* inspect       - get-log && get-state"
+	@echo "* get-log-dev   - Retrieve and print Device DEV Log File"
+	@echo "* get-state-dev - Retrieve and print Device DEV State File"
+	@echo "* inspect-dev   - get-log-dev && get-state-dev"
+	@echo "--Misc Commands--"
+	@echo "* shell - Micropython REPL on Device"
+	@echo "* clean - Clean Up"
 
 include Ports.mk
 include FileMgmt.mk

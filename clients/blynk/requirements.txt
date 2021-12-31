@@ -1,0 +1,5 @@
+# Blynk
+arrow ~= 1.2.1
+blynklib ~= 0.2.6
+requests ~= 2.26.0
+PyYAML ~= 6.0

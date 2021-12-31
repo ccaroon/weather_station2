@@ -1,6 +1,10 @@
 # Weather Station #2 - TODO
 
-## blynk-main
+## server
+* [x] Move esp8266 code to here
+* [ ] Remove WS code from `mikros` repo
+
+## blynk client
 * [x] Add Temp High
 * [x] Add Temp Low
 * [x] Added timestamp to TEMP and HUMD
@@ -10,7 +14,3 @@
 * [ ] Notifications
     - raining?
     - freezing?
-
-## station
-* [x] Move esp8266 code to here
-* [ ] Remove WS code from `mikros` repo
