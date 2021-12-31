@@ -28,8 +28,9 @@ list-files:
 get-file:
 ifneq ($(FILE),)
 	ampy --port $(PORT) get $(FILE) > /tmp/$(FILE)
-	@echo "+--------------------------------------------------------------------+"
+	@echo "+-------------------------------------------------------------------+"
 	@cat /tmp/$(FILE)
+	@echo "+-------------------------------------------------------------------+"
 else
 	echo "ERROR: Must Specify a filename with FILE=filename"
 endif
