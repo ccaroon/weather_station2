@@ -2,7 +2,9 @@ default:
 	@echo "Weather Station #2"
 	@echo "-----------------------------------"
 	@echo "* secrets - Generate Secrets Class"
-	@echo "--See Also--"
+	@echo "* clean   - Clean up"
+	@echo
+	@echo "-- See Also --"
 	@echo "* server/Makefile"
 	@echo "* clients/blynk/Makefile"
 
@@ -13,6 +15,8 @@ lib/secrets.py: .secrets
 	./bin/gen_secrets.py
 
 clean:
-	rm ./lib/secrets.py
+	rm -f ./lib/secrets.py
+	find . -name "*.pyc" -exec rm -rf {} +
+	find . -name "*.mpy" -exec rm -rf {} +
 
 .PHONY: clean secrets

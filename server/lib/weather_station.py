@@ -14,9 +14,12 @@ class WeatherStation:
 
         self.__publish = kwargs.get("publish", True)
         self.__maintain_state = kwargs.get("maintain_state", False)
+        self.__logger = kwargs.get('logger')
 
         self.reset_high_low()
         self.__load_state()
+
+        self.__log('WeatherStation Init Complete')
 
     def name(self):
         return self.__name
@@ -50,6 +53,12 @@ class WeatherStation:
         self.__temp_high = -999
         self.__temp_low  = 999
 
+    def __log(self, msg):
+        if self.__logger:
+            self.__logger.log(msg, stdout=True)
+        else:
+            print(msg)
+
     def __save_state(self):
         if self.__maintain_state:
             state = {
@@ -61,7 +70,7 @@ class WeatherStation:
                 with open("%s.json" % self.__name, "w") as file:
                     ujson.dump(state, file)
             except Exception as e:
-                print(str(e))
+                self.__log(str(e))
 
     def __load_state(self):
         if self.__maintain_state:
@@ -75,7 +84,7 @@ class WeatherStation:
                 self.__temp_high = state['temp_high']
                 self.__temp_low = state['temp_low']
             except Exception as e:
-                print(str(e))
+                self.__log(str(e))
 
     def __update_high_temp(self, tempF):
         if tempF > self.__temp_high:

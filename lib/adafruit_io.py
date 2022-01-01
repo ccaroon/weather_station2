@@ -23,7 +23,6 @@ class AdafruitIO:
         fields = ['value']
         fields.extend(kwargs.get('fields', []))
         include = ','.join(fields)
-        # url = F"{AdafruitIO.BASE_URL}/{self.__username}/feeds/{feed_name}/data?limit={limit}&include={include}"
         url = "%s/%s/feeds/%s/data?limit=%d&include=%s" % (AdafruitIO.BASE_URL, self.__username, feed_name, limit, include)
         headers = {'X-AIO-Key': self.__key}
 

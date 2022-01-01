@@ -1,16 +1,18 @@
 default:
 	@echo "Weather Station #2 -- Server"
 	@echo "---------------------------"
+	@echo "-- Commands --"
+	@echo "  * install - Install the Weather Station Code"
+	@echo "  * shell - Micropython REPL on Device"
+	@echo "  * clean - Clean Up"
+	@echo
 	@echo "-- Debugging Commands -- "
-	@echo "* get-log       - Retrieve and print Device Log File"
-	@echo "* get-state     - Retrieve and print Device State File"
-	@echo "* inspect       - get-log && get-state"
-	@echo "* get-log-dev   - Retrieve and print Device DEV Log File"
-	@echo "* get-state-dev - Retrieve and print Device DEV State File"
-	@echo "* inspect-dev   - get-log-dev && get-state-dev"
-	@echo "--Misc Commands--"
-	@echo "* shell - Micropython REPL on Device"
-	@echo "* clean - Clean Up"
+	@echo "  * get-log       - Retrieve and print Device Log File"
+	@echo "  * get-state     - Retrieve and print Device State File"
+	@echo "  * inspect       - get-log && get-state"
+	@echo "  * get-log-dev   - Retrieve and print Device DEV Log File"
+	@echo "  * get-state-dev - Retrieve and print Device DEV State File"
+	@echo "  * inspect-dev   - get-log-dev && get-state-dev"
 
 include Ports.mk
 include FileMgmt.mk
@@ -18,7 +20,7 @@ include FileMgmt.mk
 # NOTE: boot and main **must** be .py files ... not .mpy
 BOOT = boot.pyc
 APP  = main.pyc
-LIBS = ../lib/adafruit_io.mpy ../lib/secrets.mpy lib/chronos.mpy lib/indicator.mpy lib/wifi.mpy lib/file_utils.mpy lib/sensor.mpy lib/weather_station.mpy
+LIBS = ../lib/adafruit_io.mpy ../lib/secrets.mpy lib/chronos.mpy lib/indicator.mpy lib/logger.mpy lib/wifi.mpy lib/file_utils.mpy lib/sensor.mpy lib/weather_station.mpy
 
 # Order matters - This include must come after above vars are set.
 include App.mk

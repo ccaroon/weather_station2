@@ -84,10 +84,10 @@ class Chronos:
             passed = now - cron['last_run']
 
             if debug:
-                print("%s - Time Passed: %ds / %ds" % (name, passed, cron['period']))
+                print("Chronos.tick(%s) - Time Passed: %ds / %ds" % (name, passed, cron['period']))
 
             if  passed >= cron['period']:
-                cron['handler']()
+                cron['handler'](now)
                 cron['last_run'] = now
 
     @classmethod
