@@ -41,6 +41,16 @@ class MyWifi:
         cls.connect(SECRETS['ssid'], SECRETS['password'])
 
     @classmethod
+    def reconnect(cls, delay=1, retry=30):
+        retry_count = 0
+        while not cls.WLAN.isconnected() and retry < retry_count:
+            cls.autoconnect()
+            retry_count += 1
+            utime.sleep(delay)
+
+        return cls.WLAN.isconnected()
+
+    @classmethod
     def test(cls, url="http://api.open-notify.org/iss-now.json"):
         resp = urequests.get(url)
         if resp.status_code == 200:

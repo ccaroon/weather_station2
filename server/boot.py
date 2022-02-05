@@ -5,6 +5,7 @@ print("----- START BOOT -----")
 
 print("    --> Chronos.sync() begin...")
 Chronos.sync()
+print("    --> %s" % (Chronos.now_str()))
 print("    --> Chronos.sync() end.")
 
 print("------ END BOOT ------")

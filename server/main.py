@@ -5,9 +5,9 @@ from lib.chronos import Chronos
 from lib.indicator import Indicator
 from lib.logger import Log
 from lib.weather_station import WeatherStation
-
+from lib.wifi import MyWifi
 # ------------------------------------------------------------------------------
-IS_DEV = True
+IS_DEV = False
 # ------------------------------------------------------------------------------
 AIO          = None
 BASE_NAME    = 'weather-station'
@@ -18,26 +18,43 @@ MEASURE_FREQ = 1.00 * 60 # In Seconds
 NAME         = "%s-dev" % (BASE_NAME) if IS_DEV else BASE_NAME
 STATION      = None
 # ------------------------------------------------------------------------------
-def exit_error(name, msg):
-    global HAS_ERRORED
-    HAS_ERRORED = True
-
+def print_error(name, err):
+    log_line = "%s: (%s) --> '%s'" % (name, type(err), str(err))
     if LOG:
-        LOG.log("%s: '%s'" % (name, msg), stdout=True)
+        LOG.log(log_line, stdout=True)
     else:
-        print("%s: %s" % (name,msg))
+        print(log_line)
+# ------------------------------------------------------------------------------
+def recover_error(err):
+    recovered = False
 
-    if INDICATE:
-        INDICATE.blue(False)
-        INDICATE.red(True)
+    if 'CONN_LOST' in str(err) or 'ECONNABORTED' in str(err):
+        if MyWifi.reconnect():
+            recovered = True
+            if LOG:
+                LOG.log("Successfully reconnected to WiFi!", stdout=True)
+
+    return recovered
+# ------------------------------------------------------------------------------
+def handle_error(name, err):
+    global HAS_ERRORED
+
+    print_error(name, err)
+
+    if not recover_error(err):
+        HAS_ERRORED = True
+
+        if INDICATE:
+            INDICATE.blue(False)
+            INDICATE.red(True)
 # ------------------------------------------------------------------------------
 try:
     INDICATE = Indicator()
     LOG = Log("%s.log" % (NAME))
     STATION = WeatherStation(NAME, logger=LOG, maintain_state=True, publish=True)
     AIO = AdafruitIO(STATION.name())
-except Exception as e:
-    exit_error("MAIN.GlobalsInit.Error", str(e))
+except Exception as err:
+    handle_error("MAIN.GlobalsInit.Error", err)
 # ------------------------------------------------------------------------------
 def reset_high_low(timestamp):
     """Chronos Callback for resetting the daily low & hi temps"""
@@ -66,8 +83,8 @@ def main():
             ),
             stdout=True
         )
-    except Exception as e:
-        exit_error("MAIN.Init.Error", str(e))
+    except Exception as err:
+        handle_error("MAIN.Init.Error", err)
 
     while (not HAS_ERRORED):
         try:
@@ -80,8 +97,8 @@ def main():
 
             Chronos.tick(True)
             time.sleep(MEASURE_FREQ)
-        except Exception as e:
-            exit_error("MAIN.Loop.Error", str(e))
+        except Exception as err:
+            handle_error("MAIN.Loop.Error", err)
 # ------------------------------------------------------------------------------
 main()
 if LOG:
