@@ -2,7 +2,7 @@ import sys
 
 from lib.secrets import SECRETS
 
-if sys.platform == 'esp8266':
+if sys.platform in ('esp8266', 'esp32'):
     import urequests as requests
 else:
     import requests

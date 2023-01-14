@@ -1,5 +1,9 @@
 from lib.chronos import Chronos
+from lib.wifi import MyWifi
+
 import lib.file_utils as fu
+
+MyWifi.autoconnect()
 
 print("----- START BOOT -----")
 

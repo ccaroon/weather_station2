@@ -38,7 +38,10 @@ class MyWifi:
 
     @classmethod
     def autoconnect(cls):
-        cls.connect(SECRETS['ssid'], SECRETS['password'])
+        if cls.WLAN.isconnected():
+            print("Already connected to '%s'" % (cls.WLAN.config('essid')))
+        else:
+            cls.connect(SECRETS['ssid'], SECRETS['password'])
 
     @classmethod
     def reconnect(cls, delay=1, retry=30):

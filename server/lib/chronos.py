@@ -19,38 +19,43 @@ class Chronos:
         """Sync with 'Internet' Time"""
         data = None
 
-        resp = urequests.get("http://worldclockapi.com/api/json/est/now")
+        api_url = "http://worldtimeapi.org/api/timezone/America/New_York"
+        resp = urequests.get(api_url)
         if resp.status_code == 200:
             data = resp.json()
         else:
             raise Exception("Error Sync'ing Time: [%d]" % (resp.status_code))
 
+        # 2022-12-20T12:51:23.758998-05:00
+        current_time = data['datetime']
 
-        # 2019-09-17T17:40-04:00
-        current_time = data['currentDateTime']
-
-        matches = re.match("(\d+)-(\d+)-(\d+)T(\d+):(\d+)(\+|-)(\d+):(\d+)", current_time)
+        matches = re.match("(\d+)-(\d+)-(\d+)T(\d+):(\d+):(\d+)\.\d+(\+|-)(\d+):\d+", current_time)
 
         if not matches:
             raise Exception("Error Parsing DateTime: %s" % (current_time))
 
         now = []
 
+        # year, month, day, weekday, hour, minute, second, microsecond
         # 1-3 == YYYY, MM, DD
         for i in range(1,4):
             now.append(int(matches.group(i)))
 
-        # 6-7 == (+|-), TZOffset
-        tz = int(matches.group(7))
-        if matches.group(6) == '-':
-            tz *= -1
-        now.append(tz)
+        # weekday
+        now.append(None)
 
-        # 4-5 = HH, mm
-        for i in range(4,6):
+        # 4-6 = HH, mm, ss
+        for i in range(4,7):
             now.append(int(matches.group(i)))
-        # Add seconds, milliseconds
-        now.extend((0,0))
+
+        # Add microseconds
+        now.append(0)
+
+        # 6-7 == (+|-), TZOffset
+        # tz = int(matches.group(8))
+        # if matches.group(7) == '-':
+        #     tz *= -1
+        # now.append(tz)
 
         cls.CLOCK.datetime(now)
 
