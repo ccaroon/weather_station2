@@ -1,9 +1,7 @@
 import re
 
-# time.mktime() : tuple -> seconds
-# time.localtime() : seconds -> tuple
+import ntptime
 import time
-import urequests
 
 from machine import RTC
 
@@ -15,49 +13,25 @@ class Chronos:
         pass
 
     @classmethod
-    def sync(cls):
+    def sync(cls, tz_offset=-5):
         """Sync with 'Internet' Time"""
-        data = None
+        now_secs = ntptime.time()
+        tm = time.gmtime(now_secs)
 
-        api_url = "http://worldtimeapi.org/api/timezone/America/New_York"
-        resp = urequests.get(api_url)
-        if resp.status_code == 200:
-            data = resp.json()
-        else:
-            raise Exception("Error Sync'ing Time: [%d]" % (resp.status_code))
+        # TODO: handle DST
 
-        # 2022-12-20T12:51:23.758998-05:00
-        current_time = data['datetime']
-
-        matches = re.match("(\d+)-(\d+)-(\d+)T(\d+):(\d+):(\d+)\.\d+(\+|-)(\d+):\d+", current_time)
-
-        if not matches:
-            raise Exception("Error Parsing DateTime: %s" % (current_time))
-
-        now = []
-
-        # year, month, day, weekday, hour, minute, second, microsecond
-        # 1-3 == YYYY, MM, DD
-        for i in range(1,4):
-            now.append(int(matches.group(i)))
-
-        # weekday
-        now.append(None)
-
-        # 4-6 = HH, mm, ss
-        for i in range(4,7):
-            now.append(int(matches.group(i)))
-
-        # Add microseconds
-        now.append(0)
-
-        # 6-7 == (+|-), TZOffset
-        # tz = int(matches.group(8))
-        # if matches.group(7) == '-':
-        #     tz *= -1
-        # now.append(tz)
-
-        cls.CLOCK.datetime(now)
+        cls.CLOCK.datetime(
+            (
+                # year, month, day
+                tm[0], tm[1], tm[2],
+                # weekday
+                tm[6] + 1,
+                # hours, minutes, seconds
+                tm[3] + tz_offset, tm[4], tm[5],
+                # sub-seconds
+                0
+            )
+        )
 
     @classmethod
     def every(cls, period, name, handler, **kwargs):
